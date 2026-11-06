@@ -1,0 +1,990 @@
+---
+// src/pages/pacotes.astro
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const pageTitle = "Pacotes para Eventos e Buffet em São Paulo — Villa Aurora";
+const pageDescription = "Conheça nossos pacotes completos para eventos sociais e corporativos na Villa Aurora em São Paulo: Essencial (R$ 1.500), Clássico (R$ 2.500), Premium (R$ 4.500) e Exclusivo (R$ 7.500).";
+
+const whatsappNumber = '5511999999999';
+
+function getWhatsappUrl(packageName: string) {
+  const msg = encodeURIComponent(`Olá! Gostaria de solicitar um orçamento para o ${packageName} no Villa Aurora.`);
+  return `https://wa.me/${whatsappNumber}?text=${msg}`;
+}
+
+const packages = [
+  {
+    name: "Essencial",
+    price: "1.500",
+    period: "investimento base",
+    tagline: "Praticidade e elegância para celebrações intimistas",
+    target: "Mini eventos, reuniões corporativas e celebrações familiares reservadas.",
+    isPopular: false,
+    environmentIncluded: "Salão Nobre climatizado com mesas e cadeiras de alto padrão inclusas.",
+    buffetIncluded: "Welcome coffee com salgados finos assados artesanais, água mineral, sucos naturais e refrigerantes de primeira linha.",
+    supportIncluded: "Equipe básica de recepção, higienização contínua e gerador de apoio.",
+    features: [
+      "Locação de salão com climatização central digital",
+      "Mobiliário básico com mesas redondas e cadeiras confortáveis",
+      "Welcome coffee ou coquetel básico com salgados assados finos",
+      "Bebidas não alcoólicas inclusas (água, sucos e refrigerantes)",
+      "Equipe de recepção e limpeza inicial e pós-evento",
+      "Acesso completo à internet de alta velocidade"
+    ]
+  },
+  {
+    name: "Clássico",
+    price: "2.500",
+    period: "investimento base",
+    tagline: "Equilíbrio ideal entre sofisticação e comemoração dinâmica",
+    target: "Aniversários marcantes, noivados, coquetéis empresariais e confraternizações médias.",
+    isPopular: false,
+    environmentIncluded: "Salão principal amplo com mobiliário completo e iluminação ambiente acolhedora.",
+    buffetIncluded: "Coquetel volante completo com seleção de finger foods frios e quentes, serviço de bebidas de linha premium e mini sobremesas autorais.",
+    supportIncluded: "Garçons qualificados, apoio contínuo de limpeza e coordenador de salão dedicado.",
+    features: [
+      "Salão principal com climatização e acústica tratada",
+      "Mobiliário completo (mesas postas, bistrôs e poltronas)",
+      "Coquetel volante com variedade de finger foods nobres",
+      "Serviço de bebidas não alcoólicas e mini sobremesas finas",
+      "Garçons uniformizados e coordenador de salão dedicado",
+      "Iluminação ambiente aconchegante com perfis dourados",
+      "Grupo gerador de prontidão para 100% das instalações"
+    ]
+  },
+  {
+    name: "Premium",
+    price: "4.500",
+    period: "investimento base",
+    tagline: "A configuração favorita para festas completas e inesquecíveis",
+    target: "Formaturas, festas de 15 anos e eventos corporativos de grande porte.",
+    isPopular: true,
+    environmentIncluded: "Salão Nobre + Jardim Cerimonial Externo + Pista de Dança estruturada com sonorização e iluminação cênica.",
+    buffetIncluded: "Buffet com entradas sofisticadas, prato principal empratado ou ilha gastronômica quente, sobremesas finas e bar com carta de drinks clássicos selecionados.",
+    supportIncluded: "Equipe completa de garçons, bartender profissional, segurança privativa, equipe de limpeza e coordenador técnico de evento.",
+    features: [
+      "Uso integrado do Salão Nobre e do Jardim Cerimonial",
+      "Pista de dança com grid aéreo, som profissional e luz computadorizada",
+      "Buffet completo com entradas finas e prato principal à escolha",
+      "Sobremesas requintadas e ilha de encerramento com café",
+      "Bar com drinks clássicos preparados por bartender especializado",
+      "Segurança patrimonial privativa e controle de acesso",
+      "Coordenador técnico acompanhando toda a execução"
+    ]
+  },
+  {
+    name: "Exclusivo",
+    price: "7.500",
+    period: "investimento base",
+    tagline: "Experiência máxima de requinte sem preocupações",
+    target: "Casamentos de alto padrão e grandes celebrações de gala sociais e corporativas.",
+    isPopular: false,
+    environmentIncluded: "Acesso e uso total e irrestrito de todos os ambientes: Salão Nobre, Jardim Cerimonial, Lounge Bar e Camarim VIP dos anfitriões.",
+    buffetIncluded: "Banquete gastronômico integral: ilha de antepastos nobres, menu à francesa de 3 tempos, sobremesas autorais, mesa de café colonial e Open Bar premium com mixologista.",
+    supportIncluded: "Equipe completa de gala, consultoria de cronograma, técnicos dedicados de som e iluminação, seguranças privados e acompanhamento integral no dia.",
+    features: [
+      "Acesso irrestrito a 100% dos ambientes do complexo Villa Aurora",
+      "Camarim VIP com banheiro privativo e serviço exclusivo de canapés",
+      "Banquete gastronômico completo (ilha de antepastos + menu em 3 tempos)",
+      "Open Bar premium ilimitado com drinks autorais e clássicos",
+      "Mesa de encerramento com café colonial, petit fours e licores",
+      "Equipe de gala com maitre, bartenders, seguranças e técnicos dedicados",
+      "Consultoria de montagem de cronograma e suporte de coordenação no dia"
+    ]
+  }
+];
+
+const comparisonBenefits = [
+  { benefit: "Salão Nobre Climatizado", essencial: true, classico: true, premium: true, exclusivo: true },
+  { benefit: "Mobiliário Completo de Alto Padrão", essencial: "Básico", classico: true, premium: true, exclusivo: true },
+  { benefit: "Serviço de Buffet Incluso", essencial: "Welcome Coffee", classico: "Coquetel Volante", premium: "Almoço/Jantar Completo", exclusivo: "Banquete em 3 Tempos" },
+  { benefit: "Serviço de Bar de Coquetéis", essencial: false, classico: false, premium: "Drinks Clássicos", exclusivo: "Open Bar Premium com Mixologista" },
+  { benefit: "Área Externa & Jardim Cerimonial", essencial: false, classico: false, premium: true, exclusivo: true },
+  { benefit: "Pista de Dança com Som & Luz Cênica", essencial: false, classico: false, premium: true, exclusivo: true },
+  { benefit: "Camarim VIP dos Anfitriões", essencial: false, classico: false, premium: false, exclusivo: true },
+  { benefit: "Gerador de Prontidão (100% Instalações)", essencial: true, classico: true, premium: true, exclusivo: true },
+  { benefit: "Segurança Privativa Dedicada", essencial: false, classico: false, premium: true, exclusivo: true },
+  { benefit: "Coordenador Técnico de Evento", essencial: false, classico: true, premium: true, exclusivo: true }
+];
+
+const additionalServices = [
+  {
+    title: "Hora Adicional de Evento",
+    desc: "Flexibilidade para estender a sua celebração com equipe e infraestrutura mantidas no mesmo nível de excelência."
+  },
+  {
+    title: "Adequação de Cardápio para Dietas",
+    desc: "Menus adaptados para convidados com restrições alimentares (dietas vegetarianas, veganas, celíacas ou intolerantes a lactose)."
+  },
+  {
+    title: "Estação Gastronômica Temática",
+    desc: "Adição de ilhas temáticas: estação de risotos ao vivo, ilha de massas artesanais ou mesa de queijos nobres e vinhos."
+  },
+  {
+    title: "Serviço de Valet com Manobrista",
+    desc: "Recepção coberta com equipe de manobristas uniformizados e seguro para maior conforto e comodidade dos seus convidados."
+  }
+];
+---
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:locale" content="pt_BR" />
+  </head>
+  <body>
+    <!-- Cabeçalho Global -->
+    <Header activePath="/pacotes" />
+
+    <main id="mainContent">
+      <!-- 1. Hero da Página -->
+      <section class="packages-hero" aria-label="Apresentação dos Pacotes">
+        <div class="hero-bg-wrapper">
+          <img 
+            src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=2000&q=85" 
+            alt="Mesas postas para celebração na Villa Aurora em São Paulo" 
+            class="hero-bg-img"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <div class="hero-overlay" aria-hidden="true"></div>
+        </div>
+
+        <div class="hero-content">
+          <span class="hero-eyebrow">Soluções Completas &bull; São Paulo, SP</span>
+          <h1 class="hero-title">Pacotes Sob Medida para a Sua Celebração</h1>
+          <p class="hero-subtitle">
+            Combinamos infraestrutura arquitetônica de alto padrão a serviços completos de buffet, atendimento e suporte técnico para que você desfrute cada instante sem preocupações.
+          </p>
+          <div class="hero-actions">
+            <a href="#cards-pacotes" class="btn-primary">Ver Nossos Pacotes</a>
+            <a href="#comparativo" class="btn-secondary">Comparar Benefícios</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Apresentação dos Quatro Pacotes -->
+      <section class="packages-cards-section" id="cards-pacotes" aria-label="Planos e Pacotes">
+        <div class="section-container">
+          <div class="section-header-center">
+            <span class="section-eyebrow">Investimento Transparente</span>
+            <h2 class="section-title">Escolha o Pacote Ideal para o Seu Evento</h2>
+            <p class="section-lead">
+              Todos os nossos pacotes integram locação de espaço, climatização, mobiliário, equipe de apoio e serviços gastronômicos de buffet.
+            </p>
+          </div>
+
+          <div class="packages-grid">
+            {packages.map((pkg) => (
+              <div class={`package-card ${pkg.isPopular ? 'popular-card' : ''}`}>
+                {pkg.isPopular && (
+                  <div class="popular-ribbon">
+                    <span>Mais Escolhido</span>
+                  </div>
+                )}
+
+                <div class="pkg-header">
+                  <h3 class="pkg-name">{pkg.name}</h3>
+                  <p class="pkg-tagline">{pkg.tagline}</p>
+                  
+                  <div class="price-box">
+                    <span class="currency">R$</span>
+                    <strong class="amount">{pkg.price}</strong>
+                    <span class="period">/{pkg.period}*</span>
+                  </div>
+                </div>
+
+                <div class="pkg-target-box">
+                  <span class="target-label">Indicado para:</span>
+                  <p class="target-text">{pkg.target}</p>
+                </div>
+
+                <div class="pkg-inclusions">
+                  <div class="inclusion-group">
+                    <strong class="inc-title">Infraestrutura do Espaço:</strong>
+                    <p class="inc-text">{pkg.environmentIncluded}</p>
+                  </div>
+
+                  <div class="inclusion-group">
+                    <strong class="inc-title">Serviço de Buffet Incluso:</strong>
+                    <p class="inc-text">{pkg.buffetIncluded}</p>
+                  </div>
+
+                  <div class="inclusion-group">
+                    <strong class="inc-title">Equipe & Suporte:</strong>
+                    <p class="inc-text">{pkg.supportIncluded}</p>
+                  </div>
+                </div>
+
+                <div class="pkg-features">
+                  <strong class="features-label">Itens em destaque:</strong>
+                  <ul class="features-list">
+                    {pkg.features.map((feat) => (
+                      <li class="feature-item">
+                        <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div class="pkg-cta">
+                  <a 
+                    href={getWhatsappUrl(pkg.name)} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class={pkg.isPopular ? 'btn-primary full-width' : 'btn-secondary full-width'}
+                  >
+                    Solicitar Orçamento do {pkg.name}
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p class="footnote">
+            * Valores de investimento base de locação e estrutura inicial com buffet de partida. Valores complementares são ajustados de acordo com o número exato de convidados e seleção final de cardápio.
+          </p>
+        </div>
+      </section>
+
+      <!-- 3. Comparativo Visual dos Benefícios -->
+      <section class="comparison-section" id="comparativo" aria-labelledby="compTitle">
+        <div class="section-container">
+          <div class="section-header-center">
+            <span class="section-eyebrow">Visão Geral</span>
+            <h2 id="compTitle" class="section-title">Comparativo dos Benefícios</h2>
+            <p class="section-lead">
+              Confira com clareza o que cada nível de pacote contempla para a sua celebração.
+            </p>
+          </div>
+
+          <div class="table-responsive">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th scope="col" class="th-main">Benefícios Inclusos</th>
+                  <th scope="col">Essencial (R$ 1.500)</th>
+                  <th scope="col">Clássico (R$ 2.500)</th>
+                  <th scope="col" class="th-popular">Premium (R$ 4.500)</th>
+                  <th scope="col">Exclusivo (R$ 7.500)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {comparisonBenefits.map((row) => (
+                  <tr>
+                    <td class="benefit-name">{row.benefit}</td>
+                    
+                    <!-- Essencial -->
+                    <td class="benefit-val">
+                      {typeof row.essencial === 'boolean' ? (
+                        row.essencial ? (
+                          <span class="status-yes" aria-label="Incluso">&#10003;</span>
+                        ) : (
+                          <span class="status-no" aria-label="Não incluso">&mdash;</span>
+                        )
+                      ) : (
+                        <span class="status-text">{row.essencial}</span>
+                      )}
+                    </td>
+
+                    <!-- Clássico -->
+                    <td class="benefit-val">
+                      {typeof row.classico === 'boolean' ? (
+                        row.classico ? (
+                          <span class="status-yes" aria-label="Incluso">&#10003;</span>
+                        ) : (
+                          <span class="status-no" aria-label="Não incluso">&mdash;</span>
+                        )
+                      ) : (
+                        <span class="status-text">{row.classico}</span>
+                      )}
+                    </td>
+
+                    <!-- Premium -->
+                    <td class="benefit-val td-popular">
+                      {typeof row.premium === 'boolean' ? (
+                        row.premium ? (
+                          <span class="status-yes" aria-label="Incluso">&#10003;</span>
+                        ) : (
+                          <span class="status-no" aria-label="Não incluso">&mdash;</span>
+                        )
+                      ) : (
+                        <span class="status-text">{row.premium}</span>
+                      )}
+                    </td>
+
+                    <!-- Exclusivo -->
+                    <td class="benefit-val">
+                      {typeof row.exclusivo === 'boolean' ? (
+                        row.exclusivo ? (
+                          <span class="status-yes" aria-label="Incluso">&#10003;</span>
+                        ) : (
+                          <span class="status-no" aria-label="Não incluso">&mdash;</span>
+                        )
+                      ) : (
+                        <span class="status-text">{row.exclusivo}</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Serviços Adicionais e Personalização -->
+      <section class="additionals-section" aria-labelledby="addTitle">
+        <div class="section-container">
+          <div class="section-header-center">
+            <span class="section-eyebrow">Flexibilidade</span>
+            <h2 id="addTitle" class="section-title">Serviços Adicionais & Personalização</h2>
+            <p class="section-lead">
+              Personalize o seu pacote para atender com perfeição aos desejos dos seus convidados.
+            </p>
+          </div>
+
+          <div class="additionals-grid">
+            {additionalServices.map((svc) => (
+              <div class="additional-card">
+                <h3 class="add-card-title">{svc.title}</h3>
+                <p class="add-card-desc">{svc.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. CTA Banner WhatsApp -->
+      <section class="cta-section" aria-label="Solicitação de Orçamento">
+        <div class="section-container">
+          <div class="cta-box">
+            <span class="cta-eyebrow">Proposta sob Medida</span>
+            <h2 class="cta-title">Quer um Pacote Personalizado para o Seu Evento?</h2>
+            <p class="cta-desc">
+              Converse com nossa equipe pelo WhatsApp. Apresente o seu número de convidados, data prevista e preferências gastronômicas para elaborarmos uma proposta exclusiva.
+            </p>
+            <div class="cta-actions">
+              <a 
+                href={getWhatsappUrl('Proposta Personalizada')} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-primary"
+              >
+                Solicitar Orçamento no WhatsApp
+              </a>
+              <a href="/contato" class="btn-secondary">
+                Preencher Formulário de Contato
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Rodapé Global -->
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :root {
+    --color-onyx: #201A16;
+    --color-onyx-card: #2B221D;
+    --color-onyx-deep: #17120F;
+    --color-gold: #c5a059;
+    --color-gold-light: #dfbd74;
+    --color-bronze: #8C6D4F;
+    --color-bronze-glow: rgba(184, 134, 76, 0.25);
+    --color-champagne: #f7f3e9;
+    --color-champagne-muted: rgba(247, 243, 233, 0.75);
+    --border-gold-subtle: rgba(197, 160, 89, 0.25);
+    --border-gold-bright: rgba(197, 160, 89, 0.55);
+    --border-bronze-subtle: rgba(163, 126, 88, 0.3);
+    --font-heading: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-onyx);
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-sans);
+    background-color: var(--color-onyx);
+    color: var(--color-champagne-muted);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .section-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* Botões */
+  .btn-primary {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.84rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #1C1613;
+    background: linear-gradient(135deg, var(--color-gold-light) 0%, var(--color-gold) 100%);
+    padding: 0.9rem 1.8rem;
+    border-radius: 2px;
+    border: 1px solid var(--color-gold-light);
+    box-shadow: 0 4px 18px rgba(197, 160, 89, 0.22);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-align: center;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(197, 160, 89, 0.38);
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.84rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--color-champagne);
+    background: transparent;
+    padding: 0.9rem 1.8rem;
+    border-radius: 2px;
+    border: 1px solid var(--border-gold-subtle);
+    transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
+    text-align: center;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--color-gold);
+    color: var(--color-gold-light);
+    background-color: rgba(197, 160, 89, 0.08);
+  }
+
+  .full-width {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* 1. HERO DA PÁGINA */
+  .packages-hero {
+    position: relative;
+    min-height: 58vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5rem 1.5rem 4rem;
+    overflow: hidden;
+  }
+
+  .hero-bg-wrapper {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .hero-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(32, 26, 22, 0.7) 0%, rgba(32, 26, 22, 0.92) 85%, var(--color-onyx) 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    border: 1px solid var(--border-gold-subtle);
+    background-color: rgba(43, 34, 29, 0.85);
+    padding: 0.4rem 1.1rem;
+    border-radius: 30px;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-title {
+    font-family: var(--font-heading);
+    font-size: 2.8rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-champagne);
+    margin: 0 0 1.2rem 0;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.7;
+    margin: 0 auto 2.2rem;
+    max-width: 680px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: center;
+  }
+
+  /* 2. CARDS DE PACOTES */
+  .packages-cards-section {
+    padding: 5rem 0 6rem;
+  }
+
+  .section-header-center {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 3.5rem;
+  }
+
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: 2.35rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--color-champagne);
+    margin: 0 0 0.8rem 0;
+  }
+
+  .section-lead {
+    font-size: 0.95rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .packages-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .package-card {
+    background-color: var(--color-onyx-card);
+    border: 1px solid var(--border-gold-subtle);
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    border-radius: 2px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .package-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--border-gold-bright);
+  }
+
+  .popular-card {
+    border: 1.5px solid var(--color-gold);
+    background: linear-gradient(180deg, #352820 0%, var(--color-onyx-card) 100%);
+    box-shadow: 0 8px 30px rgba(197, 160, 89, 0.15);
+  }
+
+  .popular-ribbon {
+    position: absolute;
+    top: -12px;
+    right: 24px;
+    background: linear-gradient(135deg, var(--color-gold-light) 0%, var(--color-gold) 100%);
+    color: #1C1613;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.9rem;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  .pkg-name {
+    font-family: var(--font-heading);
+    font-size: 2.1rem;
+    font-weight: 600;
+    color: var(--color-champagne);
+    margin: 0 0 0.4rem 0;
+  }
+
+  .pkg-tagline {
+    font-size: 0.86rem;
+    color: var(--color-gold-light);
+    margin: 0 0 1.5rem 0;
+    line-height: 1.4;
+  }
+
+  .price-box {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-gold-subtle);
+  }
+
+  .currency {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    color: var(--color-gold);
+  }
+
+  .amount {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    line-height: 1;
+  }
+
+  .period {
+    font-size: 0.78rem;
+    color: var(--color-champagne-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .pkg-target-box {
+    margin: 1.5rem 0;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(197, 160, 89, 0.15);
+    padding: 1rem;
+    border-radius: 2px;
+  }
+
+  .target-label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-gold);
+    margin-bottom: 0.2rem;
+  }
+
+  .target-text {
+    font-size: 0.84rem;
+    color: var(--color-champagne);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .pkg-inclusions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--border-gold-subtle);
+  }
+
+  .inc-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-gold-light);
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  .inc-text {
+    font-size: 0.84rem;
+    color: var(--color-champagne-muted);
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  .pkg-features {
+    margin: 1.5rem 0 2rem;
+  }
+
+  .features-label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.84rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.4;
+  }
+
+  .check-icon {
+    width: 1rem;
+    height: 1rem;
+    color: var(--color-gold);
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .pkg-cta {
+    margin-top: auto;
+  }
+
+  .footnote {
+    font-size: 0.78rem;
+    color: rgba(247, 243, 233, 0.55);
+    text-align: center;
+    margin-top: 2rem;
+    line-height: 1.6;
+  }
+
+  /* 3. TABELA DE COMPARAÇÃO */
+  .comparison-section {
+    padding: 5.5rem 0;
+    background: linear-gradient(180deg, var(--color-onyx) 0%, var(--color-onyx-deep) 100%);
+    border-top: 1px solid var(--border-gold-subtle);
+    border-bottom: 1px solid var(--border-gold-subtle);
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+    border: 1px solid var(--border-gold-subtle);
+    background-color: var(--color-onyx-card);
+    border-radius: 2px;
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 0.86rem;
+  }
+
+  .comparison-table th {
+    background-color: rgba(197, 160, 89, 0.08);
+    color: var(--color-champagne);
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 600;
+    padding: 1.2rem 1.2rem;
+    border-bottom: 1px solid var(--border-gold-subtle);
+    white-space: nowrap;
+  }
+
+  .th-main {
+    text-align: left;
+    width: 32%;
+  }
+
+  .th-popular {
+    background-color: rgba(197, 160, 89, 0.18);
+    color: var(--color-gold-light);
+  }
+
+  .comparison-table td {
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+    color: var(--color-champagne-muted);
+  }
+
+  .benefit-name {
+    text-align: left;
+    color: var(--color-champagne);
+    font-weight: 500;
+  }
+
+  .td-popular {
+    background-color: rgba(197, 160, 89, 0.05);
+  }
+
+  .status-yes {
+    color: var(--color-gold);
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  .status-no {
+    color: rgba(247, 243, 233, 0.3);
+    font-size: 1.15rem;
+  }
+
+  .status-text {
+    font-size: 0.78rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.35;
+    display: inline-block;
+  }
+
+  /* 4. SERVIÇOS ADICIONAIS */
+  .additionals-section {
+    padding: 5.5rem 0;
+  }
+
+  .additionals-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+  }
+
+  .additional-card {
+    background-color: var(--color-onyx-card);
+    border: 1px solid var(--border-gold-subtle);
+    padding: 2.2rem 1.8rem;
+    border-radius: 2px;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+
+  .additional-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-gold);
+  }
+
+  .add-card-title {
+    font-family: var(--font-heading);
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: var(--color-champagne);
+    margin: 0 0 0.6rem 0;
+  }
+
+  .add-card-desc {
+    font-size: 0.88rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* 5. CTA BANNER */
+  .cta-section {
+    padding: 5rem 0 6rem;
+    border-top: 1px solid var(--border-gold-subtle);
+  }
+
+  .cta-box {
+    background: radial-gradient(circle at center, #3D2E23 0%, var(--color-onyx-card) 100%);
+    border: 1px solid var(--color-gold);
+    padding: 4.5rem 2rem;
+    text-align: center;
+    border-radius: 2px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  }
+
+  .cta-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .cta-title {
+    font-family: var(--font-heading);
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: var(--color-champagne);
+    margin: 0 0 1.1rem 0;
+    line-height: 1.25;
+  }
+
+  .cta-desc {
+    font-size: 0.98rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.7;
+    margin: 0 auto 2.2rem;
+    max-width: 680px;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: center;
+  }
+
+  /* RESPONSIVIDADE */
+  @media (min-width: 768px) {
+    .packages-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .additionals-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-title {
+      font-size: 3.5rem;
+    }
+
+    .packages-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .package-card {
+      padding: 2.2rem 1.5rem;
+    }
+  }
+</style>

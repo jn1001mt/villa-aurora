@@ -1,0 +1,884 @@
+---
+// src/pages/buffet.astro
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const pageTitle = "Buffet e Gastronomia Autoral para Eventos em SP — Villa Aurora";
+const pageDescription = "Conheça a alta gastronomia da Villa Aurora: entradas sofisticadas, pratos principais nobres, opções vegetarianas e veganas, doces finos, bar de coquetéis e degustação agendada em São Paulo.";
+
+const whatsappNumber = '5511999999999';
+const whatsappMsgBuffet = encodeURIComponent('Olá! Gostaria de receber os cardápios detalhados do buffet e agendar uma degustação no Villa Aurora.');
+const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMsgBuffet}`;
+
+const serviceFormats = [
+  {
+    title: "Serviço Empratado (À Francesa / À Inglesa)",
+    description: "Máxima sofisticação para casamentos e jantares de gala. Pratos finalizados individualmente na cozinha e servidos à mesa por garçons experientes com sincronismo impecável.",
+    highlight: "Ideal para celebrações solenes e jantares formais"
+  },
+  {
+    title: "Buffet Franco-Americano",
+    description: "Estações centrais elegantes onde os convidados escolhem e se servem com liberdade, contando com o suporte contínuo da equipe de chefs para reposição e atendimento.",
+    highlight: "Dinâmico, abundante e altamente versátil"
+  },
+  {
+    title: "Ilhas Gastronômicas Temáticas",
+    description: "Pontos fixos de degustação ao vivo montados no salão ou no jardim: ilhas de antepastos mediterrâneos, risoteria ao vivo, massas artesanais ou cortes nobres.",
+    highlight: "Interativo e decorativo para o ambiente"
+  },
+  {
+    title: "Coquetel Volante & Finger Foods",
+    description: "Serviço contínuo e refinado de mini porções servidas diretamente aos convidados em pé ou nos lounges, garantindo fluidez e socialização durante toda a celebração.",
+    highlight: "Perfeito para aniversários, 15 anos e coquetéis empresariais"
+  }
+];
+
+const menuSections = [
+  {
+    id: "entradas",
+    title: "Entradas & Finger Foods",
+    eyebrow: "Primeiras Impressões",
+    description: "Combinações delicadas e contemporâneas preparadas para aguçar o paladar logo na recepção dos convidados.",
+    image: "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1000&q=80",
+    alt: "Seleção refinada de canapés e finger foods com apresentação estética",
+    items: [
+      { name: "Canapés Finos de Salmão Defumado", desc: "Com sour cream, dill fresco e raspas de limão siciliano sobre crocante de mil-folhas." },
+      { name: "Mini Quiches Artesanais de Brie com Damasco", desc: "Massa podre tradicional leve e recheio cremoso gratinado." },
+      { name: "Tartelletes Gourmets de Cogumelos Selvagens", desc: "Mix de shitake e shimeji salteados na manteiga trufada e tomilho." },
+      { name: "Carpaccio Clássico em Mini Torradas", desc: "Lâminas finas de carne bovina, molho de alcaparras, parmesão ralado e rúcula fresca." },
+      { name: "Dadinhos de Queijo Coalho com Geleia Artesanal", desc: "Geleia suave de pimenta vermelha reduzida lentamente." }
+    ]
+  },
+  {
+    id: "principais",
+    title: "Pratos Principais Nobres",
+    eyebrow: "O Centro da Experiência",
+    description: "Receitas assinadas que equilibram cortes nobres, peixes frescos, massas feitas à mão e molhos aveludados.",
+    image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=80",
+    alt: "Prato principal empratado de carne nobre com redução de vinho e purê aveludado",
+    items: [
+      { name: "Mignon em Redução de Vinho do Porto", desc: "Acompanhado de aligot sedoso de mandioquinha e aspargos grelhados." },
+      { name: "Robalo Fresco em Crosta de Ervas Finas", desc: "Ao molho beurre blanc de limão cravo e risoto de alho-poró crocante." },
+      { name: "Raviolini Artesanal de Búfala", desc: "Recheado com mozzarella de búfala fresca ao molho rústico de tomates doces e manjericão." },
+      { name: "Risoto de Funghi Porcini com Azeite Trufado", desc: "Arroz arbóreo italiano no ponto perfeito, finalizado com queijo grana padano." },
+      { name: "Supremo de Frango Confitado", desc: "Aroma de ervas provençais com redução de laranja e mousseline de batata-doce." }
+    ]
+  },
+  {
+    id: "vegetarianas-veganas",
+    title: "Opções Vegetarianas & Veganas",
+    eyebrow: "Respeito e Inclusão Gastronômica",
+    description: "Pratos elaborados com a mesma complexidade, frescor e requinte para convidados com escolhas ou restrições alimentares.",
+    image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1000&q=80",
+    alt: "Prato vegano sofisticado com vegetais grelhados e molho especial",
+    items: [
+      { name: "Nhoque de Batata-Baroa ao Pesto de Castanhas", desc: "Pesto artesanal sem laticínios com tomate cereja confit e rúcula fresca." },
+      { name: "Risoto de Abóbora Cabotiá com Amêndoas Tostadas", desc: "Cremosidade vegetal com toque de noz-moscada e sálvia crocante." },
+      { name: "Folhado de Palmito Pupunha e Alho-Poró", desc: "Massa leve recheada com legumes tenros perfumados com ervas frescas." },
+      { name: "Ceviche Vegano de Cogumelos e Manga", desc: "Leche de tigre vegetal, cebola roxa, coentro e chips de batata-doce." }
+    ]
+  },
+  {
+    id: "sobremesas",
+    title: "Doces Finos & Sobremesas",
+    eyebrow: "O Fechamento Perfeito",
+    description: "Criações autorais e clássicos da confeitaria que encerram a comemoração com elegância inesquecível.",
+    image: "https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=1000&q=80",
+    alt: "Mesa de doces finos e sobremesas sofisticadas na Villa Aurora",
+    items: [
+      { name: "Verrine de Chocolate Belga 70%", desc: "Camadas de mousse aveludado, praliné crocante de avelãs e calda de frutas vermelhas." },
+      { name: "Mil-Folhas Francês de Baunilha Bourbon", desc: "Massa folhada caramelizada e creme pâtissière leve e sedoso." },
+      { name: "Mesa de Doces Finos Tradicionais", desc: "Brigadeiros gourmet de pistache, camafeus de nozes, trufas douradas e doces artesanais." },
+      { name: "Encerramento com Café Colonial", desc: "Café expresso especial servido com petit fours, mini carolinas e licores finos." }
+    ]
+  },
+  {
+    id: "bebidas",
+    title: "Bebidas & Bar de Coquetéis",
+    eyebrow: "Mixologia de Alto Padrão",
+    description: "Carta de drinks clássicos e autorais com bartenders experientes, destilados premium e seleção de vinhos e espumantes.",
+    image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=1000&q=80",
+    alt: "Coquetéis artesanais servidos em taças de cristal com guarnições botânicas",
+    items: [
+      { name: "Gin Tônicas Botânicas", desc: "Gin premium com infusões florais, especiarias, zimbro, alecrim e frutas frescas." },
+      { name: "Drinks Clássicos Internacionais", desc: "Aperol Spritz, Negroni clássico, Moscow Mule na caneca de cobre e Dry Martini." },
+      { name: "Caipirinhas Gourmet & Frutas Brasileiras", desc: "Cachaça envelhecida ou vodka com frutas da estação, manjericão e xarope de gengibre." },
+      { name: "Mocktails (Coquetéis Sem Álcool)", desc: "Criações refrescantes com água com gás, xaropes artesanais, ervas e sucos cítricos." },
+      { name: "Linha Não Alcoólica Completa", desc: "Água mineral com e sem gás, águas aromatizadas, sucos integrais e refrigerantes de primeira linha." }
+    ]
+  }
+];
+---
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:locale" content="pt_BR" />
+  </head>
+  <body>
+    <!-- Cabeçalho Global -->
+    <Header activePath="/buffet" />
+
+    <main id="mainContent">
+      <!-- 1. Hero da Página -->
+      <section class="buffet-hero" aria-label="Apresentação do Buffet">
+        <div class="hero-bg-wrapper">
+          <img 
+            src="https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=2000&q=85" 
+            alt="Gastronomia sofisticada da Villa Aurora em São Paulo" 
+            class="hero-bg-img"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <div class="hero-overlay" aria-hidden="true"></div>
+        </div>
+
+        <div class="hero-content">
+          <span class="hero-eyebrow">Alta Gastronomia Autoral &bull; São Paulo, SP</span>
+          <h1 class="hero-title">A Arte de Celebrar com Sabores Inesquecíveis</h1>
+          <p class="hero-subtitle">
+            Cozinha de alta técnica, ingredientes frescos rigorosamente selecionados e apresentação visual impecável para tornar o seu evento uma experiência sensorial completa.
+          </p>
+          <div class="hero-actions">
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn-primary">
+              Solicitar Cardápios no WhatsApp
+            </a>
+            <a href="#degustacao" class="btn-secondary">
+              Agendar Degustação
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Filosofia Gastronômica Villa Aurora -->
+      <section class="philosophy-section" aria-labelledby="philoTitle">
+        <div class="section-container">
+          <div class="philosophy-grid">
+            <div class="philosophy-text">
+              <span class="section-eyebrow">Nossa Filosofia</span>
+              <h2 id="philoTitle" class="section-title">Harmonia entre Técnica, Afeto e Estética</h2>
+              <p class="section-description">
+                Na <strong>Villa Aurora</strong>, a gastronomia não é apenas um serviço: é um dos pilares mais marcantes da memória que seus convidados guardarão do grande dia.
+              </p>
+              <p class="section-description">
+                Nossos chefs combinam técnicas clássicas da cozinha internacional com a riqueza de ingredientes nacionais de pequenos produtores. Cada prato é planejado para surpreender no aroma, na textura e na montagem visual.
+              </p>
+              
+              <div class="philosophy-pillars">
+                <div class="pillar-item">
+                  <span class="pillar-num">01</span>
+                  <strong class="pillar-name">Frescor Absoluto</strong>
+                  <span class="pillar-desc">Preparo artesanal no dia do evento sem ultraprocessados.</span>
+                </div>
+                <div class="pillar-item">
+                  <span class="pillar-num">02</span>
+                  <strong class="pillar-name">Estética Impecável</strong>
+                  <span class="pillar-desc">Louças finas, talheres nobres e montagem contemporânea.</span>
+                </div>
+                <div class="pillar-item">
+                  <span class="pillar-num">03</span>
+                  <strong class="pillar-name">Personalização Total</strong>
+                  <span class="pillar-desc">Cardápios sob medida para o perfil do seu público.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="philosophy-media">
+              <div class="photo-frame">
+                <img 
+                  src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=80" 
+                  alt="Finalização delicada de prato autoral na cozinha do Villa Aurora" 
+                  class="philosophy-img"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Formatos de Serviço -->
+      <section class="service-formats-section" aria-labelledby="formatsTitle">
+        <div class="section-container">
+          <div class="section-header-center">
+            <span class="section-eyebrow">Versatilidade Operacional</span>
+            <h2 id="formatsTitle" class="section-title">Formatos de Serviço Adaptados ao Seu Evento</h2>
+            <p class="section-lead">
+              Escolha a dinâmica perfeita para o ritmo da sua celebração social ou corporativa.
+            </p>
+          </div>
+
+          <div class="formats-grid">
+            {serviceFormats.map((fmt) => (
+              <div class="format-card">
+                <h3 class="format-title">{fmt.title}</h3>
+                <p class="format-desc">{fmt.description}</p>
+                <div class="format-highlight">
+                  <span class="highlight-badge">{fmt.highlight}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Seções Detalhadas do Cardápio -->
+      <section class="menu-categories-section" aria-label="Cardápio Completo">
+        <div class="section-container">
+          <div class="menu-stack">
+            {menuSections.map((sec, idx) => (
+              <article class="menu-block" id={sec.id}>
+                <div class={`menu-grid ${idx % 2 === 1 ? 'reverse-grid' : ''}`}>
+                  <!-- Texto e Itens -->
+                  <div class="menu-info">
+                    <span class="menu-eyebrow">{sec.eyebrow}</span>
+                    <h2 class="menu-title">{sec.title}</h2>
+                    <p class="menu-desc">{sec.description}</p>
+
+                    <div class="items-list">
+                      {sec.items.map((it) => (
+                        <div class="dish-item">
+                          <div class="dish-header">
+                            <h3 class="dish-name">{it.name}</h3>
+                          </div>
+                          <p class="dish-desc">{it.desc}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <!-- Imagem Fotográfica -->
+                  <div class="menu-media">
+                    <div class="photo-frame">
+                      <img 
+                        src={sec.image} 
+                        alt={sec.alt} 
+                        class="menu-img"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Degustação Agendada para Anfitriões e Noivos -->
+      <section class="tasting-section" id="degustacao" aria-labelledby="tastingTitle">
+        <div class="section-container">
+          <div class="tasting-box">
+            <div class="tasting-text">
+              <span class="section-eyebrow">Experiência Exclusiva</span>
+              <h2 id="tastingTitle" class="section-title">Degustação Personalizada de Cardápio</h2>
+              <p class="section-description">
+                Acreditamos que a escolha do menu deve ser um momento tranquilo e prazeroso. Por isso, oferecemos aos anfitriões e noivos uma sessão de degustação completa no Villa Aurora após a aprovação da proposta inicial.
+              </p>
+              <ul class="tasting-steps">
+                <li>
+                  <strong>Alinhamento Prévia:</strong>
+                  <span>Mapeamento do perfil dos convidados e restrições alimentares.</span>
+                </li>
+                <li>
+                  <strong>Degustação de Entradas e Principais:</strong>
+                  <span>Prova ao vivo dos pratos selecionados e harmonização sugerida.</span>
+                </li>
+                <li>
+                  <strong>Ajuste Fino dos Sabores:</strong>
+                  <span>Refinamento de temperos, pontos de cozimento e formatos de louça.</span>
+                </li>
+              </ul>
+              <div class="tasting-action">
+                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn-primary">
+                  Agendar Sessão de Degustação via WhatsApp
+                </a>
+              </div>
+            </div>
+
+            <div class="tasting-image-wrapper">
+              <div class="photo-frame">
+                <img 
+                  src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1000&q=80" 
+                  alt="Taças de vinho e pratos selecionados em degustação intimista na Villa Aurora" 
+                  class="tasting-img"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Banner de Conversão WhatsApp -->
+      <section class="cta-section" aria-label="Solicitação de Cardápios e Orçamento">
+        <div class="section-container">
+          <div class="cta-box">
+            <span class="cta-eyebrow">Cardápios Completos & Proposta</span>
+            <h2 class="cta-title">Receba Nossos Cardápios Detalhados em PDF</h2>
+            <p class="cta-desc">
+              Envie uma mensagem pelo WhatsApp informando a data prevista e a quantidade estimada de convidados. Nossa equipe comercial responderá com o material completo e opções de orçamentos sob medida.
+            </p>
+            <div class="cta-actions">
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn-primary">
+                Solicitar Cardápio via WhatsApp
+              </a>
+              <a href="/contato" class="btn-secondary">
+                Preencher Formulário de Proposta
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Rodapé Global -->
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :root {
+    --color-onyx: #201A16;
+    --color-onyx-card: #2B221D;
+    --color-onyx-deep: #17120F;
+    --color-gold: #c5a059;
+    --color-gold-light: #dfbd74;
+    --color-bronze: #8C6D4F;
+    --color-bronze-glow: rgba(184, 134, 76, 0.25);
+    --color-champagne: #f7f3e9;
+    --color-champagne-muted: rgba(247, 243, 233, 0.75);
+    --border-gold-subtle: rgba(197, 160, 89, 0.25);
+    --border-gold-bright: rgba(197, 160, 89, 0.5);
+    --border-bronze-subtle: rgba(163, 126, 88, 0.3);
+    --font-heading: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-onyx);
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-sans);
+    background-color: var(--color-onyx);
+    color: var(--color-champagne-muted);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .section-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* Botões */
+  .btn-primary {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.84rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #1C1613;
+    background: linear-gradient(135deg, var(--color-gold-light) 0%, var(--color-gold) 100%);
+    padding: 0.9rem 1.8rem;
+    border-radius: 2px;
+    border: 1px solid var(--color-gold-light);
+    box-shadow: 0 4px 18px rgba(197, 160, 89, 0.22);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-align: center;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(197, 160, 89, 0.38);
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.84rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--color-champagne);
+    background: transparent;
+    padding: 0.9rem 1.8rem;
+    border-radius: 2px;
+    border: 1px solid var(--border-gold-subtle);
+    transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
+    text-align: center;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--color-gold);
+    color: var(--color-gold-light);
+    background-color: rgba(197, 160, 89, 0.08);
+  }
+
+  /* 1. HERO DO BUFFET */
+  .buffet-hero {
+    position: relative;
+    min-height: 58vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5rem 1.5rem 4rem;
+    overflow: hidden;
+  }
+
+  .hero-bg-wrapper {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .hero-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(32, 26, 22, 0.7) 0%, rgba(32, 26, 22, 0.92) 85%, var(--color-onyx) 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    border: 1px solid var(--border-gold-subtle);
+    background-color: rgba(43, 34, 29, 0.85);
+    padding: 0.4rem 1.1rem;
+    border-radius: 30px;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-title {
+    font-family: var(--font-heading);
+    font-size: 2.8rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-champagne);
+    margin: 0 0 1.2rem 0;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.7;
+    margin: 0 auto 2.2rem;
+    max-width: 680px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: center;
+  }
+
+  /* 2. FILOSOFIA GASTRONÔMICA */
+  .philosophy-section {
+    padding: 6rem 0;
+    border-bottom: 1px solid var(--border-gold-subtle);
+  }
+
+  .philosophy-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: 2.35rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--color-champagne);
+    margin: 0 0 1rem 0;
+  }
+
+  .section-description,
+  .section-lead {
+    font-size: 0.95rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.7;
+    margin: 0 0 1.2rem 0;
+  }
+
+  .philosophy-pillars {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-gold-subtle);
+  }
+
+  .pillar-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .pillar-num {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    color: var(--color-gold);
+    font-weight: 700;
+  }
+
+  .pillar-name {
+    color: var(--color-champagne);
+    font-size: 0.92rem;
+  }
+
+  .pillar-desc {
+    font-size: 0.82rem;
+    color: var(--color-champagne-muted);
+  }
+
+  .photo-frame {
+    border: 1px solid var(--border-gold-subtle);
+    padding: 0.45rem;
+    background-color: var(--color-onyx-card);
+  }
+
+  .philosophy-img,
+  .menu-img,
+  .tasting-img {
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* 3. FORMATOS DE SERVIÇO */
+  .service-formats-section {
+    padding: 5.5rem 0;
+    background: linear-gradient(180deg, var(--color-onyx) 0%, var(--color-onyx-deep) 100%);
+    border-bottom: 1px solid var(--border-gold-subtle);
+  }
+
+  .section-header-center {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 3.5rem;
+  }
+
+  .formats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+  }
+
+  .format-card {
+    background-color: var(--color-onyx-card);
+    border: 1px solid var(--border-gold-subtle);
+    padding: 2.2rem 1.8rem;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+
+  .format-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-gold);
+  }
+
+  .format-title {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-champagne);
+    margin: 0 0 0.8rem 0;
+    line-height: 1.3;
+  }
+
+  .format-desc {
+    font-size: 0.88rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.6;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .highlight-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-gold-light);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    padding: 0.3rem 0.75rem;
+    background-color: rgba(197, 160, 89, 0.05);
+  }
+
+  /* 4. SEÇÕES DO CARDÁPIO */
+  .menu-categories-section {
+    padding: 5rem 0;
+  }
+
+  .menu-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 6rem;
+  }
+
+  .menu-block {
+    scroll-margin-top: 100px;
+    padding-bottom: 5rem;
+    border-bottom: 1px solid var(--border-gold-subtle);
+  }
+
+  .menu-block:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  .menu-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .menu-title {
+    font-family: var(--font-heading);
+    font-size: 2.3rem;
+    font-weight: 600;
+    color: var(--color-champagne);
+    margin: 0 0 0.8rem 0;
+    line-height: 1.2;
+  }
+
+  .menu-desc {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--color-champagne-muted);
+    margin: 0 0 2rem 0;
+  }
+
+  .items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .dish-item {
+    border-left: 2px solid var(--color-gold);
+    padding-left: 1.2rem;
+  }
+
+  .dish-name {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-champagne);
+    margin: 0 0 0.2rem 0;
+  }
+
+  .dish-desc {
+    font-size: 0.85rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* 5. DEGUSTAÇÃO */
+  .tasting-section {
+    padding: 5.5rem 0;
+    background: linear-gradient(180deg, var(--color-onyx-deep) 0%, var(--color-onyx) 100%);
+    border-top: 1px solid var(--border-gold-subtle);
+    border-bottom: 1px solid var(--border-gold-subtle);
+  }
+
+  .tasting-box {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  .tasting-steps {
+    list-style: none;
+    padding: 0;
+    margin: 1.8rem 0 2.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .tasting-steps li {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    padding-left: 1rem;
+    border-left: 2px solid var(--color-gold-light);
+  }
+
+  .tasting-steps strong {
+    color: var(--color-champagne);
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+
+  .tasting-steps span {
+    color: var(--color-champagne-muted);
+  }
+
+  /* 6. CTA BANNER */
+  .cta-section {
+    padding: 6rem 0;
+  }
+
+  .cta-box {
+    background: radial-gradient(circle at center, #3D2E23 0%, var(--color-onyx-card) 100%);
+    border: 1px solid var(--color-gold);
+    padding: 4.5rem 2rem;
+    text-align: center;
+    border-radius: 2px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  }
+
+  .cta-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .cta-title {
+    font-family: var(--font-heading);
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: var(--color-champagne);
+    margin: 0 0 1.1rem 0;
+    line-height: 1.25;
+  }
+
+  .cta-desc {
+    font-size: 0.98rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.7;
+    margin: 0 auto 2.2rem;
+    max-width: 680px;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: center;
+  }
+
+  /* RESPONSIVIDADE */
+  @media (min-width: 640px) {
+    .philosophy-pillars {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .formats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-title {
+      font-size: 3.5rem;
+    }
+
+    .section-title {
+      font-size: 2.8rem;
+    }
+
+    .philosophy-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4.5rem;
+    }
+
+    .menu-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4.5rem;
+    }
+
+    .reverse-grid {
+      direction: rtl;
+    }
+
+    .reverse-grid > * {
+      direction: ltr;
+    }
+
+    .tasting-box {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4.5rem;
+    }
+
+    .formats-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

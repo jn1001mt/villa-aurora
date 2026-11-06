@@ -149,17 +149,13 @@ const testimonials = [
       <!-- 1. Hero Section -->
       <section class="hero-section" aria-label="Apresentação Principal">
         <div class="hero-background">
-          <video
-            class="hero-video"
-            autoplay
-            muted
-            loop
-            playsinline
-            aria-hidden="true"
-            preload="auto"
-          >
-            <source src="/hero-villa-aurora.mp4" type="video/mp4" />
-          </video>
+          <img 
+            src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=2000&q=85" 
+            alt="Villa Aurora iluminada para recepção de gala em São Paulo" 
+            class="hero-img"
+            loading="eager"
+            fetchpriority="high"
+          />
           <div class="hero-overlay" aria-hidden="true"></div>
         </div>
 
@@ -436,16 +432,19 @@ const testimonials = [
 
 <style>
   :root {
-    --color-onyx: #0d0d0d;
-    --color-onyx-card: #141414;
-    --color-onyx-deep: #080808;
+    --color-onyx: #201A16;
+    --color-onyx-card: #2B221D;
+    --color-onyx-deep: #17120F;
     --color-gold: #c5a059;
     --color-gold-light: #dfbd74;
     --color-gold-dark: #9c7c3b;
+    --color-bronze: #8C6D4F;
+    --color-bronze-glow: rgba(184, 134, 76, 0.25);
     --color-champagne: #f7f3e9;
     --color-champagne-muted: rgba(247, 243, 233, 0.75);
-    --border-gold-subtle: rgba(197, 160, 89, 0.2);
+    --border-gold-subtle: rgba(197, 160, 89, 0.25);
     --border-gold-bright: rgba(197, 160, 89, 0.45);
+    --border-bronze-subtle: rgba(163, 126, 88, 0.3);
     --font-heading: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
     --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
   }
@@ -535,7 +534,7 @@ const testimonials = [
     letter-spacing: 0.12em;
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--color-onyx);
+    color: #1C1613;
     background: linear-gradient(135deg, var(--color-gold-light) 0%, var(--color-gold) 100%);
     padding: 0.9rem 1.8rem;
     border-radius: 2px;
@@ -598,20 +597,10 @@ const testimonials = [
     object-position: center;
   }
 
-  .hero-video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    z-index: 0;
-  }
-
   .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(13, 13, 13, 0.6) 0%, rgba(13, 13, 13, 0.88) 85%, var(--color-onyx) 100%);
+    background: linear-gradient(180deg, rgba(32, 26, 22, 0.6) 0%, rgba(32, 26, 22, 0.88) 85%, var(--color-onyx) 100%);
   }
 
   .hero-content {
@@ -629,7 +618,7 @@ const testimonials = [
     text-transform: uppercase;
     color: var(--color-gold);
     border: 1px solid var(--border-gold-subtle);
-    background-color: rgba(13, 13, 13, 0.7);
+    background-color: rgba(43, 34, 29, 0.85);
     padding: 0.4rem 1.1rem;
     border-radius: 30px;
     margin-bottom: 1.5rem;
@@ -871,7 +860,7 @@ const testimonials = [
   .event-card-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(13, 13, 13, 0.2) 0%, rgba(13, 13, 13, 0.9) 85%);
+    background: linear-gradient(180deg, rgba(32, 26, 22, 0.2) 0%, rgba(32, 26, 22, 0.9) 85%);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -880,7 +869,7 @@ const testimonials = [
   }
 
   .event-card:hover .event-card-overlay {
-    background: linear-gradient(180deg, rgba(13, 13, 13, 0.4) 0%, rgba(13, 13, 13, 0.95) 85%);
+    background: linear-gradient(180deg, rgba(32, 26, 22, 0.4) 0%, rgba(32, 26, 22, 0.95) 85%);
   }
 
   .event-card-title {
@@ -1012,7 +1001,7 @@ const testimonials = [
   }
 
   .cta-banner-box {
-    background: radial-gradient(circle at center, #1f1b13 0%, var(--color-onyx-card) 100%);
+    background: radial-gradient(circle at center, #3D2E23 0%, var(--color-onyx-card) 100%);
     border: 1px solid var(--color-gold);
     padding: 4.5rem 2rem;
     text-align: center;

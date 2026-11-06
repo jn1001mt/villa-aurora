@@ -1,0 +1,856 @@
+---
+// src/pages/ambientes.astro
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const pageTitle = "Ambientes para Eventos em São Paulo — Villa Aurora";
+const pageDescription = "Conheça os ambientes sofisticados da Villa Aurora: Salão Nobre, Jardim Cerimonial, Lounge Bar, Pista de Dança e Camarim dos Anfitriões em São Paulo - SP.";
+
+const whatsappNumber = '5511999999999';
+const whatsappMsgVisita = encodeURIComponent('Olá! Gostaria de agendar uma visita presencial para conhecer os ambientes da Villa Aurora.');
+const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMsgVisita}`;
+
+const environments = [
+  {
+    id: "salao-nobre",
+    name: "Salão Nobre Principal",
+    subtitle: "Amplitude, imponência e conforto térmico e acústico",
+    description: "Com amplo vão livre sem colunas intermediárias e pé-direito elevado, o Salão Nobre é o coração das celebrações da Villa Aurora. Equipado com climatização central digital inteligente e tratamento acústico de padrão internacional, acomoda montagens refinadas de mesas postas, palco para cerimoniais e lounges de apoio.",
+    features: [
+      "Vão livre amplo que permite total visibilidade dos convidados",
+      "Pé-direito alto preparado para lustres imponentes e estruturas aéreas",
+      "Climatização central digital para conforto em qualquer estação",
+      "Tratamento acústico de alta fidelidade sonora"
+    ],
+    mainImage: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=85",
+    gallery: [
+      {
+        url: "https://images.unsplash.com/photo-1544077960-604201fe74bc?auto=format&fit=crop&w=600&q=80",
+        alt: "Mesas postas com louças refinadas e castiçais dourados no Salão Nobre"
+      },
+      {
+        url: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80",
+        alt: "Perspectiva do Salão Nobre iluminado para banquete noturno"
+      }
+    ]
+  },
+  {
+    id: "jardim-externo",
+    name: "Jardim Cerimonial & Área Externa",
+    subtitle: "Paisagismo elegante integrado à iluminação decorativa",
+    description: "Um refúgio verdejante planejado para proporcionar momentos mágicos. Ideal para cerimônias de casamento ao ar livre, welcome drinks intimistas e registros fotográficos memoráveis. O espaço conta com passarela pavimentada, pergolados nobres e iluminação cênica noturna que valoriza a vegetação.",
+    features: [
+      "Paisagismo preservado com espécies nobres e folhagens tropicais",
+      "Passarela cerimonial nivelada com acessibilidade garantida",
+      "Iluminação pontual de destaque para eventos ao entardecer e à noite",
+      "Lounge aberto integrado para recepção com espumante e coquetel"
+    ],
+    mainImage: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1200&q=85",
+    gallery: [
+      {
+        url: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80",
+        alt: "Cerimônia de casamento no jardim ao entardecer"
+      },
+      {
+        url: "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=600&q=80",
+        alt: "Detalhes de flores e iluminação suave na área externa"
+      }
+    ]
+  },
+  {
+    id: "lounge-bar",
+    name: "Lounge Bar & Coquetelaria",
+    subtitle: "Design contemporâneo para experiências de mixologia",
+    description: "Projetado com estética moderna em mármore escuro, madeira nobre e perfis em dourado, o Lounge Bar é o ponto de encontro perfeito para os convidados socializarem enquanto degustam drinks autorais, espumantes e coquetéis preparados ao vivo.",
+    features: [
+      "Balcão espaçoso com infraestrutura completa para mixologistas",
+      "Iluminação âmbar acolhedora com acabamentos nobres",
+      "Mobiliário de apoio com poltronas e mesas bistrô confortáveis",
+      "Integração direta com o Salão Nobre e a Pista de Dança"
+    ],
+    mainImage: "https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=1200&q=85",
+    gallery: [
+      {
+        url: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80",
+        alt: "Coquetelaria fina servida com taças elegantes"
+      },
+      {
+        url: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=600&q=80",
+        alt: "Balcão do bar com drinks e detalhes sofisticados"
+      }
+    ]
+  },
+  {
+    id: "pista-danca",
+    name: "Pista de Dança & Palco",
+    subtitle: "Infraestrutura técnica de som e iluminação cênica",
+    description: "Ambiente vibrante concebido para manter a energia da festa no mais alto nível. Possui grid aéreo com cabeamento embutido para equipamentos de som, iluminação computadorizada, Moving Heads e espaço sob medida para bandas ao vivo e DJs de destaque.",
+    features: [
+      "Grid estrutural aéreo para suspensão de iluminação e painéis de LED",
+      "Isolamento sonoro com distribuição acústica uniforme",
+      "Espaço planejado para palco de bandas ou cabine de DJ",
+      "Piso resistente e polido de alto padrão de acabamento"
+    ],
+    mainImage: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=85",
+    gallery: [
+      {
+        url: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80",
+        alt: "Iluminação cênica na pista de dança em evento noturno"
+      },
+      {
+        url: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80",
+        alt: "Cabine e atmosfera vibrante da pista de dança"
+      }
+    ]
+  },
+  {
+    id: "camarim-anfitrioes",
+    name: "Camarim & Sala dos Anfitriões",
+    subtitle: "Privacidade, tranquilidade e conforto exclusivo",
+    description: "Um espaço privativo reservado para noivos, aniversariantes, familiares ou palestrantes. Perfeito para momentos de descanso, retoques no visual, colocação de trajes e alimentação com comodidade antes da entrada solene na festa.",
+    features: [
+      "Bancada com espelho camarim e iluminação neutra para maquiagem",
+      "Banheiro privativo completo e climatização independente",
+      "Poltronas confortáveis, araras de apoio e armários com chave",
+      "Serviço de atendimento exclusivo de garçom com água, sucos e canapés"
+    ],
+    mainImage: "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=1200&q=85",
+    gallery: [
+      {
+        url: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80",
+        alt: "Espelho camarim iluminado para preparação dos noivos"
+      },
+      {
+        url: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80",
+        alt: "Lounge privativo acolhedor dentro do camarim"
+      }
+    ]
+  }
+];
+
+const capacities = [
+  {
+    environment: "Salão Nobre Principal",
+    banquet: "Até 300 convidados",
+    cocktail: "Até 400 convidados",
+    auditorium: "Até 350 convidados",
+    climatization: "100% Climatizado"
+  },
+  {
+    environment: "Jardim Cerimonial & Área Externa",
+    banquet: "Até 150 convidados",
+    cocktail: "Até 250 convidados",
+    auditorium: "Até 200 convidados (Cerimônias)",
+    climatization: "Ventilação Natural & Cobertura"
+  },
+  {
+    environment: "Lounge Bar & Coquetelaria",
+    banquet: "Formato Bistrô / Apoio",
+    cocktail: "Até 120 convidados simultâneos",
+    auditorium: "—",
+    climatization: "100% Climatizado"
+  },
+  {
+    environment: "Pista de Dança & Palco",
+    banquet: "Integrado ao Salão",
+    cocktail: "Até 250 convidados em pista",
+    auditorium: "Espaço para Palco / Apresentações",
+    climatization: "100% Climatizado"
+  },
+  {
+    environment: "Camarim & Sala dos Anfitriões",
+    banquet: "Espaço Privativo",
+    cocktail: "Espaço Privativo",
+    auditorium: "—",
+    climatization: "Climatização Independente"
+  }
+];
+---
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:locale" content="pt_BR" />
+  </head>
+  <body>
+    <!-- Cabeçalho Global -->
+    <Header activePath="/ambientes" />
+
+    <main id="mainContent">
+      <!-- 1. Hero da Página -->
+      <section class="page-hero" aria-label="Apresentação dos Ambientes">
+        <div class="hero-bg-wrapper">
+          <img 
+            src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=2000&q=85" 
+            alt="Ambientes sofisticados da Villa Aurora em São Paulo" 
+            class="hero-bg-img"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <div class="hero-overlay" aria-hidden="true"></div>
+        </div>
+
+        <div class="hero-content">
+          <span class="hero-eyebrow">Villa Aurora &bull; São Paulo, SP</span>
+          <h1 class="hero-title">Espaços Planejados para Encantar</h1>
+          <p class="hero-subtitle">
+            Arquitetura contemporânea, infraestrutura completa e versatilidade em cada detalhe para acolher sua celebração com requinte e conforto absoluto.
+          </p>
+          <div class="hero-actions">
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn-primary">
+              Agendar Visita via WhatsApp
+            </a>
+            <a href="#tabela-capacidades" class="btn-secondary">
+              Ver Capacidades
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Apresentação Detalhada dos Ambientes -->
+      <section class="environments-detail-section" aria-label="Detalhes dos Ambientes">
+        <div class="section-container">
+          <div class="environments-stack">
+            {environments.map((env, index) => (
+              <article class="env-block" id={env.id}>
+                <div class={`env-grid ${index % 2 === 1 ? 'reverse-grid' : ''}`}>
+                  <!-- Conteúdo Textual -->
+                  <div class="env-info">
+                    <span class="env-index">Ambiente 0{index + 1}</span>
+                    <h2 class="env-title">{env.name}</h2>
+                    <p class="env-subtitle">{env.subtitle}</p>
+                    <p class="env-text">{env.description}</p>
+
+                    <div class="env-features-box">
+                      <h3 class="features-title">Diferenciais do Espaço</h3>
+                      <ul class="features-list">
+                        {env.features.map((feature) => (
+                          <li class="feature-item">
+                            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                              <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div class="env-action-row">
+                      <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="link-cta">
+                        Consultar disponibilidade deste ambiente &rarr;
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- Galeria Fotográfica do Ambiente -->
+                  <div class="env-media-group">
+                    <div class="main-photo-frame">
+                      <img 
+                        src={env.mainImage} 
+                        alt={`${env.name} - Visão principal`} 
+                        class="main-photo" 
+                        loading="lazy" 
+                      />
+                    </div>
+                    <div class="sub-photos-grid">
+                      {env.gallery.map((photo) => (
+                        <div class="sub-photo-frame">
+                          <img 
+                            src={photo.url} 
+                            alt={photo.alt} 
+                            class="sub-photo" 
+                            loading="lazy" 
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Quadro de Capacidades -->
+      <section class="capacities-section" id="tabela-capacidades" aria-labelledby="capacitiesTitle">
+        <div class="section-container">
+          <div class="section-header-center">
+            <span class="section-eyebrow">Ficha Técnica</span>
+            <h2 id="capacitiesTitle" class="section-title">Quadro de Capacidades dos Ambientes</h2>
+            <p class="section-lead">
+              Consulte a capacidade planejada de cada espaço conforme o formato da sua celebração ou reunião.
+            </p>
+          </div>
+
+          <div class="table-responsive">
+            <table class="capacities-table">
+              <thead>
+                <tr>
+                  <th scope="col">Ambiente</th>
+                  <th scope="col">Formato Banquete</th>
+                  <th scope="col">Formato Coquetel</th>
+                  <th scope="col">Auditório / Cerimonial</th>
+                  <th scope="col">Climatização</th>
+                </tr>
+              </thead>
+              <tbody>
+                {capacities.map((row) => (
+                  <tr>
+                    <td class="cell-primary">
+                      <strong>{row.environment}</strong>
+                    </td>
+                    <td>{row.banquet}</td>
+                    <td>{row.cocktail}</td>
+                    <td>{row.auditorium}</td>
+                    <td>
+                      <span class="badge-status">{row.climatization}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p class="table-note">
+            * As configurações de layout podem ser personalizadas com nossa equipe para melhor atender ao cronograma do seu evento em São Paulo.
+          </p>
+        </div>
+      </section>
+
+      <!-- 4. CTA Banner WhatsApp -->
+      <section class="cta-section" aria-label="Agendamento de Visitas">
+        <div class="section-container">
+          <div class="cta-box">
+            <span class="cta-eyebrow">Visita Guiada Exclusiva</span>
+            <h2 class="cta-title">Venha Conhecer a Villa Aurora Pessoalmente</h2>
+            <p class="cta-desc">
+              Agende um horário para visitar nossos ambientes, conversar com nossos especialistas e sentir a atmosfera única do espaço.
+            </p>
+            <div class="cta-actions">
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn-primary">
+                Agendar Visita via WhatsApp
+              </a>
+              <a href="/contato" class="btn-secondary">
+                Enviar Mensagem por Formulário
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Rodapé Global -->
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :root {
+    --color-onyx: #201A16;
+    --color-onyx-card: #2B221D;
+    --color-onyx-deep: #17120F;
+    --color-gold: #c5a059;
+    --color-gold-light: #dfbd74;
+    --color-bronze: #8C6D4F;
+    --color-bronze-glow: rgba(184, 134, 76, 0.25);
+    --color-champagne: #f7f3e9;
+    --color-champagne-muted: rgba(247, 243, 233, 0.75);
+    --border-gold-subtle: rgba(197, 160, 89, 0.25);
+    --border-gold-bright: rgba(197, 160, 89, 0.45);
+    --border-bronze-subtle: rgba(163, 126, 88, 0.3);
+    --font-heading: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-onyx);
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-sans);
+    background-color: var(--color-onyx);
+    color: var(--color-champagne-muted);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .section-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* Botões */
+  .btn-primary {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.84rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #1C1613;
+    background: linear-gradient(135deg, var(--color-gold-light) 0%, var(--color-gold) 100%);
+    padding: 0.9rem 1.8rem;
+    border-radius: 2px;
+    border: 1px solid var(--color-gold-light);
+    box-shadow: 0 4px 18px rgba(197, 160, 89, 0.22);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-align: center;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(197, 160, 89, 0.38);
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.84rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--color-champagne);
+    background: transparent;
+    padding: 0.9rem 1.8rem;
+    border-radius: 2px;
+    border: 1px solid var(--border-gold-subtle);
+    transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
+    text-align: center;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--color-gold);
+    color: var(--color-gold-light);
+    background-color: rgba(197, 160, 89, 0.08);
+  }
+
+  /* 1. HERO DA PÁGINA */
+  .page-hero {
+    position: relative;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5rem 1.5rem 4rem;
+    overflow: hidden;
+  }
+
+  .hero-bg-wrapper {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .hero-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(32, 26, 22, 0.7) 0%, rgba(32, 26, 22, 0.92) 85%, var(--color-onyx) 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    border: 1px solid var(--border-gold-subtle);
+    background-color: rgba(43, 34, 29, 0.85);
+    padding: 0.4rem 1.1rem;
+    border-radius: 30px;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-title {
+    font-family: var(--font-heading);
+    font-size: 2.8rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-champagne);
+    margin: 0 0 1.2rem 0;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.7;
+    margin: 0 auto 2.2rem;
+    max-width: 680px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: center;
+  }
+
+  /* 2. STACK DE AMBIENTES */
+  .environments-detail-section {
+    padding: 5rem 0;
+  }
+
+  .environments-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 6rem;
+  }
+
+  .env-block {
+    scroll-margin-top: 5rem;
+    padding-bottom: 5rem;
+    border-bottom: 1px solid var(--border-gold-subtle);
+  }
+
+  .env-block:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .env-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  .env-index {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .env-title {
+    font-family: var(--font-heading);
+    font-size: 2.3rem;
+    font-weight: 600;
+    color: var(--color-champagne);
+    margin: 0 0 0.4rem 0;
+    line-height: 1.2;
+  }
+
+  .env-subtitle {
+    font-size: 0.95rem;
+    color: var(--color-gold-light);
+    font-weight: 500;
+    margin: 0 0 1.2rem 0;
+  }
+
+  .env-text {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--color-champagne-muted);
+    margin: 0 0 1.8rem 0;
+  }
+
+  .env-features-box {
+    background-color: var(--color-onyx-card);
+    border: 1px solid var(--border-gold-subtle);
+    padding: 1.5rem;
+    border-radius: 2px;
+    margin-bottom: 1.8rem;
+  }
+
+  .features-title {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    color: var(--color-champagne);
+    margin: 0 0 1rem 0;
+  }
+
+  .features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.86rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.45;
+  }
+
+  .check-icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    color: var(--color-gold);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .link-cta {
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-gold-light);
+    text-decoration: none;
+    transition: color 0.25s ease, padding-left 0.25s ease;
+  }
+
+  .link-cta:hover {
+    color: var(--color-champagne);
+    padding-left: 0.4rem;
+  }
+
+  /* Galeria do Ambiente */
+  .env-media-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .main-photo-frame {
+    border: 1px solid var(--border-gold-subtle);
+    padding: 0.4rem;
+    background-color: var(--color-onyx-card);
+  }
+
+  .main-photo {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .sub-photos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .sub-photo-frame {
+    border: 1px solid var(--border-gold-subtle);
+    padding: 0.3rem;
+    background-color: var(--color-onyx-card);
+  }
+
+  .sub-photo {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* 3. QUADRO DE CAPACIDADES */
+  .capacities-section {
+    padding: 5.5rem 0;
+    background: linear-gradient(180deg, var(--color-onyx) 0%, var(--color-onyx-deep) 100%);
+    border-top: 1px solid var(--border-gold-subtle);
+    border-bottom: 1px solid var(--border-gold-subtle);
+  }
+
+  .section-header-center {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 3rem;
+  }
+
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: 2.35rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--color-champagne);
+    margin: 0 0 0.8rem 0;
+  }
+
+  .section-lead {
+    font-size: 0.95rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+    border: 1px solid var(--border-gold-subtle);
+    background-color: var(--color-onyx-card);
+    border-radius: 2px;
+  }
+
+  .capacities-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.88rem;
+  }
+
+  .capacities-table th {
+    background-color: rgba(197, 160, 89, 0.1);
+    color: var(--color-gold-light);
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 1.2rem 1.4rem;
+    border-bottom: 1px solid var(--border-gold-subtle);
+    white-space: nowrap;
+  }
+
+  .capacities-table td {
+    padding: 1.1rem 1.4rem;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+    color: var(--color-champagne-muted);
+  }
+
+  .capacities-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .cell-primary {
+    color: var(--color-champagne);
+    font-family: var(--font-sans);
+  }
+
+  .badge-status {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-gold);
+    background-color: rgba(197, 160, 89, 0.1);
+    padding: 0.25rem 0.65rem;
+    border-radius: 2px;
+    border: 1px solid var(--border-gold-subtle);
+  }
+
+  .table-note {
+    font-size: 0.78rem;
+    color: rgba(247, 243, 233, 0.55);
+    margin-top: 1.2rem;
+    text-align: center;
+  }
+
+  /* 4. CTA BANNER */
+  .cta-section {
+    padding: 6rem 0;
+  }
+
+  .cta-box {
+    background: radial-gradient(circle at center, #3D2E23 0%, var(--color-onyx-card) 100%);
+    border: 1px solid var(--color-gold);
+    padding: 4.5rem 2rem;
+    text-align: center;
+    border-radius: 2px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  }
+
+  .cta-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .cta-title {
+    font-family: var(--font-heading);
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: var(--color-champagne);
+    margin: 0 0 1.1rem 0;
+    line-height: 1.25;
+  }
+
+  .cta-desc {
+    font-size: 0.98rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.7;
+    margin: 0 auto 2.2rem;
+    max-width: 680px;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: center;
+  }
+
+  /* MEDIA QUERIES */
+  @media (min-width: 1024px) {
+    .hero-title {
+      font-size: 3.5rem;
+    }
+
+    .section-title {
+      font-size: 2.8rem;
+    }
+
+    .env-grid {
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 4.5rem;
+    }
+
+    .reverse-grid {
+      direction: rtl;
+    }
+
+    .reverse-grid > * {
+      direction: ltr;
+    }
+
+    .main-photo {
+      height: 420px;
+    }
+  }
+</style>

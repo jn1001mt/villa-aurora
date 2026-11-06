@@ -1,0 +1,146 @@
+---
+// src/components/WhatsAppButton.astro
+interface Props {
+  phoneNumber?: string;
+  defaultMessage?: string;
+}
+
+const { 
+  phoneNumber = '5511999999999', 
+  defaultMessage = 'Olá! Gostaria de falar com a equipe da Villa Aurora e solicitar um orçamento.' 
+} = Astro.props;
+
+const encodedMsg = encodeURIComponent(defaultMessage);
+const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMsg}`;
+---
+
+<!-- Botão Flutuante Fixo de WhatsApp -->
+<aside class="floating-whatsapp-container" aria-label="Atendimento rápido via WhatsApp">
+  <a 
+    href={whatsappUrl} 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    class="floating-whatsapp-btn"
+    aria-label="Falar no WhatsApp com a Villa Aurora"
+  >
+    <span class="whatsapp-tooltip">Orçamento via WhatsApp</span>
+    <span class="whatsapp-pulse" aria-hidden="true"></span>
+    <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.077-1.111-.059-.413-.136-.957-.318-1.636-.621-1.396-.624-2.316-2.029-2.387-2.123-.07-.094-.572-.763-.572-1.455 0-.693.363-1.033.493-1.174.13-.141.285-.176.38-.176.095 0 .19.002.273.006.09.004.21-.034.328.25.122.293.418 1.019.454 1.094.036.075.06.163.01.261-.05.098-.075.16-.149.247-.074.086-.156.193-.223.259-.074.074-.151.155-.065.303.086.148.384.633.824 1.025.568.505 1.047.662 1.196.736.149.074.236.062.324-.039.088-.101.378-.44.479-.59.101-.15.203-.126.34-.075.137.051.874.412 1.024.487.15.075.25.112.287.176.037.064.037.371-.107.776zM12 2C6.477 2 2 6.477 2 12c0 1.891.526 3.662 1.439 5.176L2.25 21.75l4.697-1.164C8.385 21.436 10.129 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.628 0-3.141-.472-4.414-1.285l-.316-.201-2.778.688.745-2.723-.22-.338C4.167 14.858 3.7 13.483 3.7 12 3.7 7.424 7.424 3.7 12 3.7s8.3 3.724 8.3 8.3-3.724 8.3-8.3 8.3z"/>
+    </svg>
+  </a>
+</aside>
+
+<style>
+  .floating-whatsapp-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 999;
+  }
+
+  .floating-whatsapp-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.6rem;
+    height: 3.6rem;
+    background: linear-gradient(135deg, #dfbd74 0%, #c5a059 100%);
+    color: #1C1613;
+    border: 1.5px solid #dfbd74;
+    border-radius: 50%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(197, 160, 89, 0.35);
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  }
+
+  .floating-whatsapp-btn:hover {
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.75), 0 6px 18px rgba(197, 160, 89, 0.5);
+    background: linear-gradient(135deg, #ebd092 0%, #dfbd74 100%);
+  }
+
+  .whatsapp-icon {
+    width: 1.85rem;
+    height: 1.85rem;
+    z-index: 2;
+  }
+
+  /* Efeito de Pulso Sutil */
+  .whatsapp-pulse {
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(197, 160, 89, 0.6);
+    animation: pulseRing 2.4s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Tooltip Flutuante no Desktop */
+  .whatsapp-tooltip {
+    display: none;
+    position: absolute;
+    right: 4.4rem;
+    white-space: nowrap;
+    background-color: #2B221D;
+    color: #f7f3e9;
+    font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.5rem 0.9rem;
+    border-radius: 2px;
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .floating-whatsapp-btn:hover .whatsapp-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  @keyframes pulseRing {
+    0% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    60% {
+      transform: scale(1.35);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1.35);
+      opacity: 0;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .whatsapp-tooltip {
+      display: block;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .floating-whatsapp-container {
+      bottom: 1.5rem;
+      right: 1.5rem;
+    }
+
+    .floating-whatsapp-btn {
+      width: 3.2rem;
+      height: 3.2rem;
+    }
+
+    .whatsapp-icon {
+      width: 1.6rem;
+      height: 1.6rem;
+    }
+  }
+</style>

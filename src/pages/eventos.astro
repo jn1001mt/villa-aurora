@@ -1,0 +1,763 @@
+---
+// src/pages/eventos.astro
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const pageTitle = "Eventos e Celebrações em São Paulo — Villa Aurora";
+const pageDescription = "Espaço sofisticado para casamentos, aniversários, festas de 15 anos, formaturas e eventos corporativos em São Paulo - SP. Infraestrutura completa e buffet autoral.";
+
+const whatsappNumber = '5511999999999';
+const whatsappMsgEventos = encodeURIComponent('Olá! Gostaria de consultar a disponibilidade de data e solicitar um orçamento para meu evento no Villa Aurora.');
+const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMsgEventos}`;
+
+const eventCategories = [
+  {
+    id: "casamentos",
+    title: "Casamentos & Cerimônias",
+    tagline: "O cenário dos seus sonhos para o dia mais marcante da sua vida",
+    description: "A Villa Aurora proporciona o equilíbrio perfeito entre romantismo e sofisticação. Realize a cerimônia ao ar livre no Jardim Cerimonial sob iluminação poética ou no imponente Salão Nobre, seguido de uma recepção gastronômica impecável e pista de dança inesquecível.",
+    highlights: [
+      "Integração perfeita entre o Jardim externo para o 'sim' e o Salão Nobre climatizado",
+      "Camarim exclusivo para os noivos com banho privativo e serviço de canapés",
+      "Coordenação de montagem personalizada e acessibilidade para todos os convidados",
+      "Alta gastronomia autoral com menus empratados ou banquetes modernos"
+    ],
+    image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=85",
+    alt: "Mesa de banquete e recepção de casamento elegante na Villa Aurora"
+  },
+  {
+    id: "aniversarios",
+    title: "Aniversários & Comemorações",
+    tagline: "Celebre novas fases e momentos especiais com quem você ama",
+    description: "Seja para um jantar intimista em formato bistrô ou uma grande comemoração com pista de dança e coquetel volante, nossos ambientes adaptam-se com facilidade ao estilo e número de convidados da sua festa de aniversário.",
+    highlights: [
+      "Formatos flexíveis: coquetel volante, ilhas gastronômicas ou jantar completo",
+      "Estrutura de bar de coquetéis com mixologia refinada e drinks autorais",
+      "Mobiliário requintado com lounges confortáveis e mesas postas",
+      "Equipe de garçons, recepção e limpeza dedicada durante todo o evento"
+    ],
+    image: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=1200&q=85",
+    alt: "Comemoração de aniversário sofisticada com brinde de taças"
+  },
+  {
+    id: "15-anos",
+    title: "Festas de 15 Anos (Debutantes)",
+    tagline: "Magia, brilho e energia para uma noite inesquecível",
+    description: "Do momento solene da valsa à pista de dança de alta energia, a Villa Aurora oferece tecnologia de iluminação cênica computadorizada, telões e cenografia para criar a festa dos sonhos de qualquer debutante.",
+    highlights: [
+      "Pista de dança com grid aéreo profissional para DJ, Moving Heads e efeitos cênicos",
+      "Lounges juvenis modernos integrados a espaços aconchegantes para a família",
+      "Cardápio jovem e contemporâneo: finger foods gourmets, mocktails e mesa de doces",
+      "Camarim com iluminação profissional para trocas de vestido e maquiagem"
+    ],
+    image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1200&q=85",
+    alt: "Festa de 15 anos com iluminação cênica dourada e atmosfera festiva"
+  },
+  {
+    id: "formaturas",
+    title: "Formaturas & Bailes de Gala",
+    tagline: "A celebração máxima de uma grande conquista acadêmica",
+    description: "Comemore a vitória dos formandos com um evento de prestígio. Nossa infraestrutura acolhe jantares solenes de turmas, recepções de colação de grau e bailes com serviço de buffet de alta classe e acústica impecável.",
+    highlights: [
+      "Espaço planejado para palcos de homenagens, discursos e entregas de premiações",
+      "Serviço de buffet volante e estações gastronômicas com atendimento ágil",
+      "Infraestrutura de som e vídeo sem ruídos para discursos e apresentações",
+      "Gerador de alta potência garantindo tranquilidade do início ao encerramento"
+    ],
+    image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=85",
+    alt: "Recepção de formatura elegante com mesas postas e iluminação acolhedora"
+  },
+  {
+    id: "corporativos",
+    title: "Eventos Corporativos & Premiações",
+    tagline: "Credibilidade, tecnologia e excelência para marcas de destaque",
+    description: "Confraternizações de fim de ano, convenções, lançamentos de produtos, palestras e jantares de negócios. A Villa Aurora combina localização privilegiada em São Paulo com discrição, segurança e suporte técnico para eventos empresariais.",
+    highlights: [
+      "Formatos versáteis: plenária em auditório, mesas redondas ou coquetel de networking",
+      "Climatização central estável e internet de alta velocidade para apresentações",
+      "Serviço de valet com manobristas e equipe de segurança patrimonial",
+      "Opções completas de Welcome Coffee, Coffee Break gourmet e almoço/jantar executivo"
+    ],
+    image: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=85",
+    alt: "Evento corporativo e jantar executivo em ambiente contemporâneo"
+  }
+];
+
+const operationalDifferentials = [
+  {
+    title: "Gerador Próprio de Alta Potência",
+    desc: "Grupo gerador com acionamento automático de emergência que abastece 100% das instalações (iluminação, som, climatização e cozinhas)."
+  },
+  {
+    title: "Segurança Privativa & Monitoramento",
+    desc: "Equipe especializada em controle de acesso, recepção de convidados, brigada de incêndio e monitoramento patrimonial contínuo."
+  },
+  {
+    title: "Climatização Central Inteligente",
+    desc: "Sistemas digitais de alta capacidade distribuídos pelo Salão Nobre, Lounge Bar e Camarim, mantendo o clima confortável em qualquer estação."
+  },
+  {
+    title: "Acessibilidade Universal Completa",
+    desc: "Rampas suaves de acesso, calçadas pavimentadas no jardim e sanitários adaptados para pessoas com deficiência ou mobilidade reduzida."
+  },
+  {
+    title: "Infraestrutura Técnica de Som & Luz",
+    desc: "Grid aéreo estruturado com pontos de energia dedicados e cabeamento embutido para rápida instalação de equipamentos audiovisuais."
+  },
+  {
+    title: "Facilidade de Estacionamento & Valet",
+    desc: "Localização estratégica em São Paulo - SP com área dedicada para embarque, desembarque coberto e serviço profissional de valet."
+  }
+];
+---
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:locale" content="pt_BR" />
+  </head>
+  <body>
+    <!-- Cabeçalho Global -->
+    <Header activePath="/eventos" />
+
+    <main id="mainContent">
+      <!-- 1. Hero da Página -->
+      <section class="events-hero" aria-label="Apresentação de Eventos">
+        <div class="hero-bg-wrapper">
+          <img 
+            src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2000&q=85" 
+            alt="Eventos memoráveis na Villa Aurora em São Paulo" 
+            class="hero-bg-img"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <div class="hero-overlay" aria-hidden="true"></div>
+        </div>
+
+        <div class="hero-content">
+          <span class="hero-eyebrow">Celebrações Exclusivas &bull; São Paulo, SP</span>
+          <h1 class="hero-title">O Palco Ideal para Momentos Memoráveis</h1>
+          <p class="hero-subtitle">
+            Casamentos, aniversários, 15 anos, formaturas e convenções corporativas realizados com excelência arquitetônica, alta gastronomia e segurança operacional.
+          </p>
+          <div class="hero-actions">
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn-primary">
+              Solicitar Orçamento via WhatsApp
+            </a>
+            <a href="#diferenciais" class="btn-secondary">
+              Ver Diferenciais Operacionais
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Navegação Rápida entre Modalidades -->
+      <nav class="quick-nav-bar" aria-label="Atalhos para modalidades de eventos">
+        <div class="section-container">
+          <ul class="quick-nav-list">
+            <li><a href="#casamentos" class="quick-nav-link">Casamentos</a></li>
+            <li><a href="#aniversarios" class="quick-nav-link">Aniversários</a></li>
+            <li><a href="#15-anos" class="quick-nav-link">15 Anos</a></li>
+            <li><a href="#formaturas" class="quick-nav-link">Formaturas</a></li>
+            <li><a href="#corporativos" class="quick-nav-link">Corporativos</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- 3. Seções Individuais das Modalidades de Eventos -->
+      <section class="events-categories-section" aria-label="Modalidades de Eventos">
+        <div class="section-container">
+          <div class="events-stack">
+            {eventCategories.map((item, index) => (
+              <article class="event-category-card" id={item.id}>
+                <div class={`category-grid ${index % 2 === 1 ? 'reverse-grid' : ''}`}>
+                  <!-- Conteúdo Textual -->
+                  <div class="category-info">
+                    <span class="category-tag">Modalidade 0{index + 1}</span>
+                    <h2 class="category-title">{item.title}</h2>
+                    <p class="category-tagline">{item.tagline}</p>
+                    <p class="category-desc">{item.description}</p>
+
+                    <div class="highlights-box">
+                      <h3 class="highlights-title">O Que Está Incluído na Experiência</h3>
+                      <ul class="highlights-list">
+                        {item.highlights.map((point) => (
+                          <li class="highlight-item">
+                            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                              <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>{point}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div class="category-actions">
+                      <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn-primary">
+                        Pedir Orçamento para {item.title.split('&')[0].trim()}
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- Imagem Fotográfica -->
+                  <div class="category-media">
+                    <div class="photo-frame">
+                      <img 
+                        src={item.image} 
+                        alt={item.alt} 
+                        class="category-img" 
+                        loading="lazy" 
+                      />
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Diferenciais Operacionais e Infraestrutura -->
+      <section class="differentials-section" id="diferenciais" aria-labelledby="diffTitle">
+        <div class="section-container">
+          <div class="section-header-center">
+            <span class="section-eyebrow">Tranquilidade & Segurança</span>
+            <h2 id="diffTitle" class="section-title">Diferenciais Operacionais da Villa Aurora</h2>
+            <p class="section-lead">
+              A tranquilidade de saber que cada aspecto estrutural e técnico do seu evento está sob o controle de uma equipe qualificada.
+            </p>
+          </div>
+
+          <div class="differentials-grid">
+            {operationalDifferentials.map((item, idx) => (
+              <div class="diff-card">
+                <span class="diff-num">0{idx + 1}</span>
+                <h3 class="diff-card-title">{item.title}</h3>
+                <p class="diff-card-desc">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. CTA Banner WhatsApp -->
+      <section class="cta-section" aria-label="Agendamento e Orçamento">
+        <div class="section-container">
+          <div class="cta-box">
+            <span class="cta-eyebrow">Atendimento Consultivo</span>
+            <h2 class="cta-title">Consulte a Disponibilidade da Sua Data</h2>
+            <p class="cta-desc">
+              Entre em contato conosco pelo WhatsApp oficial para checar datas disponíveis, solicitar um orçamento detalhado ou agendar uma visita presencial em São Paulo.
+            </p>
+            <div class="cta-actions">
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn-primary">
+                Falar no WhatsApp com um Consultor
+              </a>
+              <a href="/contato" class="btn-secondary">
+                Preencher Formulário de Proposta
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Rodapé Global -->
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :root {
+    --color-onyx: #201A16;
+    --color-onyx-card: #2B221D;
+    --color-onyx-deep: #17120F;
+    --color-gold: #c5a059;
+    --color-gold-light: #dfbd74;
+    --color-bronze: #8C6D4F;
+    --color-bronze-glow: rgba(184, 134, 76, 0.25);
+    --color-champagne: #f7f3e9;
+    --color-champagne-muted: rgba(247, 243, 233, 0.75);
+    --border-gold-subtle: rgba(197, 160, 89, 0.25);
+    --border-gold-bright: rgba(197, 160, 89, 0.45);
+    --border-bronze-subtle: rgba(163, 126, 88, 0.3);
+    --font-heading: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-onyx);
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-sans);
+    background-color: var(--color-onyx);
+    color: var(--color-champagne-muted);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .section-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* Botões */
+  .btn-primary {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.84rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #1C1613;
+    background: linear-gradient(135deg, var(--color-gold-light) 0%, var(--color-gold) 100%);
+    padding: 0.9rem 1.8rem;
+    border-radius: 2px;
+    border: 1px solid var(--color-gold-light);
+    box-shadow: 0 4px 18px rgba(197, 160, 89, 0.22);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-align: center;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(197, 160, 89, 0.38);
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.84rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--color-champagne);
+    background: transparent;
+    padding: 0.9rem 1.8rem;
+    border-radius: 2px;
+    border: 1px solid var(--border-gold-subtle);
+    transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
+    text-align: center;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--color-gold);
+    color: var(--color-gold-light);
+    background-color: rgba(197, 160, 89, 0.08);
+  }
+
+  /* 1. HERO DA PÁGINA */
+  .events-hero {
+    position: relative;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5rem 1.5rem 4rem;
+    overflow: hidden;
+  }
+
+  .hero-bg-wrapper {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .hero-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(32, 26, 22, 0.7) 0%, rgba(32, 26, 22, 0.92) 85%, var(--color-onyx) 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    border: 1px solid var(--border-gold-subtle);
+    background-color: rgba(43, 34, 29, 0.85);
+    padding: 0.4rem 1.1rem;
+    border-radius: 30px;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-title {
+    font-family: var(--font-heading);
+    font-size: 2.8rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-champagne);
+    margin: 0 0 1.2rem 0;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.7;
+    margin: 0 auto 2.2rem;
+    max-width: 680px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: center;
+  }
+
+  /* 2. BARRA DE ATALHOS RÁPIDOS */
+  .quick-nav-bar {
+    background-color: var(--color-onyx-card);
+    border-top: 1px solid var(--border-gold-subtle);
+    border-bottom: 1px solid var(--border-gold-subtle);
+    padding: 0.85rem 0;
+    position: sticky;
+    top: 73px;
+    z-index: 99;
+  }
+
+  .quick-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .quick-nav-link {
+    color: var(--color-champagne-muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.25s ease;
+  }
+
+  .quick-nav-link:hover {
+    color: var(--color-gold-light);
+  }
+
+  /* 3. MODALIDADES DE EVENTOS */
+  .events-categories-section {
+    padding: 5rem 0;
+  }
+
+  .events-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 6rem;
+  }
+
+  .event-category-card {
+    scroll-margin-top: 120px;
+    padding-bottom: 5rem;
+    border-bottom: 1px solid var(--border-gold-subtle);
+  }
+
+  .event-category-card:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .category-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  .category-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .category-title {
+    font-family: var(--font-heading);
+    font-size: 2.3rem;
+    font-weight: 600;
+    color: var(--color-champagne);
+    margin: 0 0 0.4rem 0;
+    line-height: 1.2;
+  }
+
+  .category-tagline {
+    font-size: 0.95rem;
+    color: var(--color-gold-light);
+    font-weight: 500;
+    margin: 0 0 1.2rem 0;
+  }
+
+  .category-desc {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--color-champagne-muted);
+    margin: 0 0 1.8rem 0;
+  }
+
+  .highlights-box {
+    background-color: var(--color-onyx-card);
+    border: 1px solid var(--border-gold-subtle);
+    padding: 1.5rem;
+    border-radius: 2px;
+    margin-bottom: 1.8rem;
+  }
+
+  .highlights-title {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    color: var(--color-champagne);
+    margin: 0 0 1rem 0;
+  }
+
+  .highlights-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .highlight-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.86rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.45;
+  }
+
+  .check-icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    color: var(--color-gold);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .photo-frame {
+    border: 1px solid var(--border-gold-subtle);
+    padding: 0.45rem;
+    background-color: var(--color-onyx-card);
+  }
+
+  .category-img {
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* 4. DIFERENCIAIS OPERACIONAIS */
+  .differentials-section {
+    padding: 5.5rem 0;
+    background: linear-gradient(180deg, var(--color-onyx) 0%, var(--color-onyx-deep) 100%);
+    border-top: 1px solid var(--border-gold-subtle);
+    border-bottom: 1px solid var(--border-gold-subtle);
+  }
+
+  .section-header-center {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 3.5rem;
+  }
+
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: 2.35rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--color-champagne);
+    margin: 0 0 0.8rem 0;
+  }
+
+  .section-lead {
+    font-size: 0.95rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .differentials-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+  }
+
+  .diff-card {
+    background-color: var(--color-onyx-card);
+    border: 1px solid var(--border-gold-subtle);
+    padding: 2.2rem 1.8rem;
+    position: relative;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+
+  .diff-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-gold);
+  }
+
+  .diff-num {
+    font-family: var(--font-heading);
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .diff-card-title {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--color-champagne);
+    margin: 0 0 0.65rem 0;
+  }
+
+  .diff-card-desc {
+    font-size: 0.88rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* 5. CTA BANNER */
+  .cta-section {
+    padding: 6rem 0;
+  }
+
+  .cta-box {
+    background: radial-gradient(circle at center, #3D2E23 0%, var(--color-onyx-card) 100%);
+    border: 1px solid var(--color-gold);
+    padding: 4.5rem 2rem;
+    text-align: center;
+    border-radius: 2px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  }
+
+  .cta-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .cta-title {
+    font-family: var(--font-heading);
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: var(--color-champagne);
+    margin: 0 0 1.1rem 0;
+    line-height: 1.25;
+  }
+
+  .cta-desc {
+    font-size: 0.98rem;
+    color: var(--color-champagne-muted);
+    line-height: 1.7;
+    margin: 0 auto 2.2rem;
+    max-width: 680px;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: center;
+  }
+
+  /* RESPONSIVIDADE */
+  @media (min-width: 640px) {
+    .differentials-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-title {
+      font-size: 3.5rem;
+    }
+
+    .section-title {
+      font-size: 2.8rem;
+    }
+
+    .category-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4.5rem;
+    }
+
+    .reverse-grid {
+      direction: rtl;
+    }
+
+    .reverse-grid > * {
+      direction: ltr;
+    }
+
+    .differentials-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

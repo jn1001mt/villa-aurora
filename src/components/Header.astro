@@ -1,0 +1,420 @@
+---
+// src/components/Header.astro
+interface Props {
+  activePath?: string;
+}
+
+const { activePath = '/' } = Astro.props;
+
+const navItems = [
+  { label: 'Início', href: '/' },
+  { label: 'Ambientes', href: '/ambientes' },
+  { label: 'Eventos', href: '/eventos' },
+  { label: 'Galeria', href: '/galeria' },
+  { label: 'Pacotes', href: '/pacotes' },
+  { label: 'Buffet', href: '/buffet' },
+  { label: 'Contato', href: '/contato' },
+];
+
+const whatsappNumber = '5511999999999';
+const whatsappMessage = encodeURIComponent('Olá! Gostaria de solicitar um orçamento para um evento no Villa Aurora.');
+const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+---
+
+<header class="site-header" id="siteHeader">
+  <div class="header-container">
+    <!-- Logotipo Textual -->
+    <a href="/" class="brand-logo" aria-label="Villa Aurora - Página Inicial">
+      <span class="brand-name">VILLA AURORA</span>
+      <span class="brand-subtitle">ESPAÇO DE EVENTOS & BUFFET</span>
+    </a>
+
+    <!-- Menu Desktop -->
+    <nav class="desktop-nav" aria-label="Navegação Principal">
+      <ul class="nav-list">
+        {navItems.map((item) => (
+          <li class="nav-item">
+            <a 
+              href={item.href} 
+              class={`nav-link ${activePath === item.href ? 'active' : ''}`}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Botão de Ação CTA (Desktop) -->
+    <div class="header-actions">
+      <a 
+        href={whatsappUrl} 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="cta-button"
+      >
+        Pedir Orçamento
+      </a>
+
+      <!-- Botão Hambúrguer Mobile -->
+      <button 
+        type="button" 
+        class="mobile-toggle" 
+        id="mobileToggle" 
+        aria-label="Abrir menu de navegação" 
+        aria-expanded="false" 
+        aria-controls="mobileDrawer"
+      >
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Menu Mobile (Drawer) -->
+  <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+    <nav class="mobile-nav" aria-label="Navegação Mobile">
+      <ul class="mobile-nav-list">
+        {navItems.map((item) => (
+          <li class="mobile-nav-item">
+            <a 
+              href={item.href} 
+              class={`mobile-nav-link ${activePath === item.href ? 'active' : ''}`}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="mobile-cta-wrapper">
+        <a 
+          href={whatsappUrl} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="cta-button mobile-cta"
+        >
+          Pedir Orçamento
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  /* Variáveis de Cores e Estilo — Marrom Taupe com nuances de bronze */
+  :root {
+    --color-onyx: #201A16;
+    --color-onyx-glass: rgba(32, 26, 22, 0.92);
+    --color-onyx-card: #2B221D;
+    --color-onyx-deep: #17120F;
+    --color-gold: #c5a059;
+    --color-gold-light: #dfbd74;
+    --color-gold-hover: #b08d46;
+    --color-champagne: #f7f3e9;
+    --color-champagne-muted: rgba(247, 243, 233, 0.75);
+    --border-gold-subtle: rgba(197, 160, 89, 0.25);
+    --border-bronze-subtle: rgba(163, 126, 88, 0.3);
+    --font-heading: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-onyx-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-gold-subtle);
+    z-index: 1000;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .header-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1.1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Logotipo */
+  .brand-logo {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    gap: 0.15rem;
+  }
+
+  .brand-name {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    color: var(--color-champagne);
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+
+  .brand-subtitle {
+    font-family: var(--font-sans);
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    color: var(--color-gold);
+    text-transform: uppercase;
+  }
+
+  .brand-logo:hover .brand-name {
+    color: var(--color-gold-light);
+  }
+
+  /* Menu Desktop */
+  .desktop-nav {
+    display: none;
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-link {
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--color-champagne-muted);
+    position: relative;
+    padding: 0.4rem 0;
+    transition: color 0.3s ease;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0%;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+    transition: width 0.3s ease, left 0.3s ease;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--color-gold-light);
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    width: 100%;
+    left: 0;
+  }
+
+  /* Ações e Botão CTA */
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  .cta-button {
+    display: none;
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #1C1613;
+    background: linear-gradient(135deg, var(--color-gold-light) 0%, var(--color-gold) 100%);
+    padding: 0.75rem 1.6rem;
+    border-radius: 2px;
+    border: 1px solid var(--color-gold-light);
+    box-shadow: 0 4px 14px rgba(197, 160, 89, 0.2);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    white-space: nowrap;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.35);
+    background: linear-gradient(135deg, #ebd092 0%, var(--color-gold-light) 100%);
+  }
+
+  .cta-button:active {
+    transform: translateY(0);
+  }
+
+  /* Botão Hambúrguer Mobile */
+  .mobile-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 2.2rem;
+    height: 2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem;
+    z-index: 1001;
+  }
+
+  .hamburger-bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-gold);
+    border-radius: 1px;
+    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+  }
+
+  .mobile-toggle:hover .hamburger-bar {
+    background-color: var(--color-gold-light);
+  }
+
+  /* Estado Aberto do Botão Hambúrguer */
+  .mobile-toggle.is-active .hamburger-bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .mobile-toggle.is-active .hamburger-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-toggle.is-active .hamburger-bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* Drawer Mobile */
+  .mobile-drawer {
+    display: none;
+    width: 100%;
+    background-color: var(--color-onyx);
+    border-top: 1px solid var(--border-gold-subtle);
+    padding: 1.5rem 2rem 2.5rem;
+    animation: fadeInDown 0.3s ease forwards;
+  }
+
+  .mobile-drawer.is-open {
+    display: block;
+  }
+
+  .mobile-nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .mobile-nav-link {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--color-champagne-muted);
+    display: block;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.12);
+    transition: color 0.3s ease, padding-left 0.3s ease;
+  }
+
+  .mobile-nav-link:hover,
+  .mobile-nav-link.active {
+    color: var(--color-gold);
+    padding-left: 0.5rem;
+  }
+
+  .mobile-cta-wrapper {
+    margin-top: 2rem;
+  }
+
+  .mobile-cta {
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsividade Desktop */
+  @media (min-width: 1024px) {
+    .desktop-nav {
+      display: block;
+    }
+
+    .cta-button {
+      display: inline-block;
+    }
+
+    .mobile-toggle {
+      display: none;
+    }
+
+    .mobile-drawer {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  function setupHeader() {
+    const toggle = document.getElementById('mobileToggle');
+    const drawer = document.getElementById('mobileDrawer');
+
+    if (!toggle || !drawer) return;
+
+    toggle.addEventListener('click', () => {
+      const isOpen = drawer.classList.contains('is-open');
+      if (isOpen) {
+        drawer.classList.remove('is-open');
+        toggle.classList.remove('is-active');
+        toggle.setAttribute('aria-expanded', 'false');
+        drawer.setAttribute('aria-hidden', 'true');
+      } else {
+        drawer.classList.add('is-open');
+        toggle.classList.add('is-active');
+        toggle.setAttribute('aria-expanded', 'true');
+        drawer.setAttribute('aria-hidden', 'false');
+      }
+    });
+
+    // Fechar drawer ao clicar em um link mobile
+    const links = drawer.querySelectorAll('.mobile-nav-link');
+    links.forEach((link) => {
+      link.addEventListener('click', () => {
+        drawer.classList.remove('is-open');
+        toggle.classList.remove('is-active');
+        toggle.setAttribute('aria-expanded', 'false');
+        drawer.setAttribute('aria-hidden', 'true');
+      });
+    });
+  }
+
+  // Executa no carregamento inicial e em transições de página no Astro
+  setupHeader();
+  document.addEventListener('astro:page-load', setupHeader);
+</script>
