@@ -156,13 +156,17 @@ const additionalServices = [
       <!-- 1. Hero da Página -->
       <section class="packages-hero" aria-label="Apresentação dos Pacotes">
         <div class="hero-bg-wrapper">
-          <img 
-            src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=2000&q=85" 
-            alt="Mesas postas para celebração na Villa Aurora em São Paulo" 
-            class="hero-bg-img"
-            loading="eager"
-            fetchpriority="high"
-          />
+          <video
+            class="hero-bg-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            aria-hidden="true"
+            preload="auto"
+          >
+            <source src="/espaco-villa-aurora.mp4" type="video/mp4" />
+          </video>
           <div class="hero-overlay" aria-hidden="true"></div>
         </div>
 
@@ -178,6 +182,16 @@ const additionalServices = [
           </div>
         </div>
       </section>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const video = document.querySelector<HTMLVideoElement>('.hero-bg-video');
+          if (video) {
+            video.muted = true;
+            video.play().catch(() => {});
+          }
+        });
+      </script>
 
       <!-- 2. Apresentação dos Quatro Pacotes -->
       <section class="packages-cards-section" id="cards-pacotes" aria-label="Planos e Pacotes">
@@ -520,6 +534,16 @@ const additionalServices = [
     height: 100%;
     object-fit: cover;
     object-position: center;
+  }
+
+  .hero-bg-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
   }
 
   .hero-overlay {
