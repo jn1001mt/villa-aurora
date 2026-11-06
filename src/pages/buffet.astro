@@ -169,6 +169,16 @@ const menuSections = [
         </div>
       </section>
 
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const video = document.querySelector<HTMLVideoElement>('.hero-bg-video');
+          if (video) {
+            video.muted = true;
+            video.play().catch(() => {});
+          }
+        });
+      </script>
+
       <!-- 2. Filosofia Gastronômica Villa Aurora -->
       <section class="philosophy-section" aria-labelledby="philoTitle">
         <div class="section-container">
